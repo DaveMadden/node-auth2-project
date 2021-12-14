@@ -3,8 +3,6 @@ const { JWT_SECRET } = require("../secrets"); // use this secret!
 const User = require('../users/users-model.js')
 
 const restricted = (req, res, next) => {
-  console.log("MIDDLEWARE: restricted")
-
   //get token from header
   const token = req.headers.authorization;
   console.log(token)
@@ -41,8 +39,7 @@ const restricted = (req, res, next) => {
 }
 
 const only = role_name => (req, res, next) => {
-  console.log("MIDDLEWARE: only:", role_name)
-  if (req.goodJWT.role === role_name){
+  if (req.goodJWT.role_name === role_name){
     next()
   }
   else{
@@ -70,7 +67,6 @@ const checkUsernameExists = (req, res, next) => {
 
 
 const validateRoleName = (req, res, next) => {
-  console.log("MIDDLEWARE: validate role name")
   
   if(!req.body.role_name || req.body.role_name.trim().length === 0){
     req.body.role_name = "student"
@@ -86,7 +82,7 @@ const validateRoleName = (req, res, next) => {
   if(req.body.role_name.length > 32){
     return next({status:422, message: "Role name can not be longer than 32 chars"})
   }
-
+  
   next()
 }
 
