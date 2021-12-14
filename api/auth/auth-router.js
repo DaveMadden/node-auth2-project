@@ -46,7 +46,7 @@ router.post("/login", checkUsernameExists, (req, res, next) => {
         })
       }
       else{
-        next({status: 401, message: "invalid creds"})
+        next({status: 401, message: "invalid credentials"})
       }
     })
     .catch(next)
